@@ -5,4 +5,8 @@ class Player
     @sign = sign
     @positions = []
   end
+
+  def add_position(pos)
+    @positions << pos
+  end
 end

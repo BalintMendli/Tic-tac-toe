@@ -15,8 +15,10 @@ class Game
       clear_console
       output(players_info(),true)
       board.draw()
-      ask_move(@current_player)
+      move=ask_move(@current_player)
+      @current_player.add_position(move)
       switch_players()
+      gets
     end
   end
 
@@ -39,7 +41,16 @@ class Game
   def ask_move(player)
     output("#{player.name}'s move", true)
     output('Enter your next move (1-9): ')
-    move = input
+    move = input.to_i
+    while !valid_move?(move)
+      output('Invalid move. Try again: ')
+      move = input.to_i
+    end
+    move
+  end
+
+  def valid_move?(move)
+    move>0 && move<10 && !@current_player.positions.include?(move) && !@other_player.positions.include?(move)
   end
 
   def won?; end
