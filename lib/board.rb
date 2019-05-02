@@ -3,7 +3,6 @@ require_relative './ui.rb'
 
 class Board
   include UI
-  attr_accessor :values
   def initialize
     @values = Array.new(3) { |row| Array.new(3) { |col| Cell.new(row * 3 + col + 1) } }
   end

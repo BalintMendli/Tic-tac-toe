@@ -25,6 +25,8 @@ class Game
     abort('The game ended with a draw!')
   end
 
+  private
+
   def get_player_data(n)
     output("Enter Player #{n + 1} name: ")
     name = input
