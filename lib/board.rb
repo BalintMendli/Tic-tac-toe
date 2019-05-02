@@ -8,7 +8,7 @@ class Board
     @values = Array.new(3) { |row| Array.new(3) { |col| Cell.new(row * 3 + col + 1) } }
   end
 
-  def draw
+  def draw()
     grid = [
       '',
       "   #{@values[0][0].value} | #{@values[0][1].value} | #{@values[0][2].value} ",
@@ -19,5 +19,10 @@ class Board
       ''
     ].join("\n")
     output(grid, true)
+  end
+
+  def update(player1_positions,player1_sign,player2_positions,player2_sign)
+    player1_positions.each{|pos| @values[(pos-1)/3.floor][(pos-1)%3].value=player1_sign}
+    player2_positions.each{|pos| @values[(pos-1)/3.floor][(pos-1)%3].value=player2_sign}
   end
 end

@@ -17,6 +17,7 @@ class Game
       board.draw()
       move=ask_move(@current_player)
       @current_player.add_position(move)
+      board.update(@players[0].positions,@players[0].sign,@players[1].positions,@players[1].sign)
       switch_players()
       gets
     end
