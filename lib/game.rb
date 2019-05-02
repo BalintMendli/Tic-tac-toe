@@ -11,7 +11,7 @@ class Game
     2.times { |n| get_player_data(n) }
     @current_player = @players[0]
     @other_player = @players[1]
-    while !won? || !full?
+    while !won? && !full?
       clear_console
       output(players_info(),true)
       board.draw()
@@ -21,6 +21,7 @@ class Game
       switch_players()
       gets
     end
+    abort("The game ended with a draw!")  
   end
 
   def get_player_data(n)
@@ -54,9 +55,14 @@ class Game
     move>0 && move<10 && !@current_player.positions.include?(move) && !@other_player.positions.include?(move)
   end
 
-  def won?; end
+  def won?
+    false
+  end
 
-  def full?; end
+  def full?
+     (@players[0].positions + @players[1].positions).length
+    (@players[0].positions + @players[1].positions).length == 9
+  end
 end
 
 Game.new
