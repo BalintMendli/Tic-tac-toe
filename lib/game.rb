@@ -5,24 +5,26 @@ require 'set'
 
 class Game
   include UI
-  def initialize
-    board = Board.new
-    @players = []
+  def initialize(board,players)
+    @board = board
+    @players = players
     output('Welcome to Tic-tac-toe!', true)
     2.times { |n| get_player_data(n) }
     @current_player = @players[0]
     @other_player = @players[1]
-    until full?
+    loop do
       clear_console
-      output(players_info, true)
-      board.draw
+      output(@players[0].player_info)
+      output(@players[1].player_info,true)
+      grid=@board.get_grid
+      output(grid,true)
       abort("#{@players[won].name} won the game!") if won
+      abort('The game ended with a draw!') if full?
       move = ask_move(@current_player)
       @current_player.add_position(move)
-      board.update(@players[0].positions, @players[0].sign, @players[1].positions, @players[1].sign)
+      board.update(move, @current_player.sign)
       switch_players
     end
-    abort('The game ended with a draw!')
   end
 
   private
@@ -31,12 +33,9 @@ class Game
     output("Enter Player #{n + 1} name: ")
     name = input
     name = name.empty? ? "Player #{n + 1}" : name
+    @players[n].name = name
     sign = n.even? ? 'X' : 'O'
-    @players[n] = Player.new(name, sign)
-  end
-
-  def players_info
-    "#{@players[0].name}: #{@players[0].sign}\n#{@players[1].name}: #{@players[1].sign}"
+    @players[n].sign = sign
   end
 
   def switch_players
@@ -70,5 +69,3 @@ class Game
     (@players[0].positions + @players[1].positions).length == 9
   end
 end
-
-Game.new
