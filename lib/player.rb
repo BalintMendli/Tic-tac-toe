@@ -1,5 +1,6 @@
 class Player
-  attr_accessor :name, :sign, :positions
+  attr_accessor :name, :sign
+  attr_reader :positions
   def initialize
     @positions = []
   end
@@ -7,7 +8,7 @@ class Player
   def player_info
     "#{@name}: #{@sign}\n"
   end
-  
+
   def add_position(pos)
     @positions << pos
   end

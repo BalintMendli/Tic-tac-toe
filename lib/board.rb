@@ -1,9 +1,9 @@
 class Board
   attr_accessor :values
   def initialize
-    @values = Array.new(3) { |row| Array.new(3) { |col| row * 3 + col + 1 }}
+    @values = Array.new(3) { |row| Array.new(3) { |col| row * 3 + col + 1 } }
   end
-  
+
   def update(move, sign)
     @values[(move - 1) / 3.floor][(move - 1) % 3] = sign
   end
