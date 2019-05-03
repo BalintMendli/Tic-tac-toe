@@ -4,17 +4,19 @@ require_relative './ui.rb'
 
 class Game
   include UI
-  def initialize
-    board = Board.new
-    @players = []
+  def initialize(board,players)
+    @board = board
+    @players = players
     output('Welcome to Tic-tac-toe!', true)
     2.times { |n| get_player_data(n) }
     @current_player = @players[0]
     @other_player = @players[1]
     while !won? || !full?
       clear_console
-      output(players_info(),true)
-      board.draw()
+      output(@players[0].player_info)
+      output(@players[1].player_info,true)
+      grid=@board.get_grid
+      output(grid,true)
       ask_move(@current_player)
       switch_players()
     end
@@ -24,12 +26,9 @@ class Game
     output("Enter Player #{n + 1} name: ")
     name = input
     name = name.empty? ? "Player #{n + 1}" : name
+    @players[n].name = name
     sign = n.even? ? 'X' : 'O'
-    @players[n] = Player.new(name, sign)
-  end
-
-  def players_info
-    "#{@players[0].name}: #{@players[0].sign}\n#{@players[1].name}: #{@players[1].sign}"
+    @players[n].sign = sign
   end
 
   def switch_players
@@ -46,5 +45,3 @@ class Game
 
   def full?; end
 end
-
-Game.new
