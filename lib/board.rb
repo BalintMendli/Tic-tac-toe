@@ -1,5 +1,4 @@
 class Board
-  attr_accessor :values
   def initialize
     @values = Array.new(3) { |row| Array.new(3) { |col| row * 3 + col + 1 } }
   end

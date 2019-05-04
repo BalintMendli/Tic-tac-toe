@@ -1,8 +1,18 @@
+require_relative './ui.rb'
+
 class Player
-  attr_accessor :name, :sign
-  attr_reader :positions
+  include UI
+  attr_reader :name, :sign, :positions
   def initialize
     @positions = []
+  end
+
+  def get_player_data(n)
+    output("Enter Player #{n + 1} name: ")
+    name = input
+    name = name.empty? ? "Player #{n + 1}" : name
+    @name = name
+    @sign = n.even? ? 'X' : 'O'
   end
 
   def player_info

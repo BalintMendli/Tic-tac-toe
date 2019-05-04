@@ -1,5 +1,3 @@
-require_relative './player.rb'
-require_relative './board.rb'
 require_relative './ui.rb'
 require 'set'
 
@@ -10,9 +8,12 @@ class Game
     @players = players
   end
 
+  WINNING_SETS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
+  private_constant :WINNING_SETS
+
   def play
-    output('Welcome to Tic-tac-toe!', true)
-    2.times { |n| get_player_data(n) }
+    show_welcome_message
+    2.times { |n| @players[n].get_player_data(n) }
     @current_player = @players[0]
     @other_player = @players[1]
     loop do
@@ -38,15 +39,6 @@ class Game
 
   private
 
-  def get_player_data(n)
-    output("Enter Player #{n + 1} name: ")
-    name = input
-    name = name.empty? ? "Player #{n + 1}" : name
-    @players[n].name = name
-    sign = n.even? ? 'X' : 'O'
-    @players[n].sign = sign
-  end
-
   def switch_players
     @current_player, @other_player = @other_player, @current_player
   end
@@ -67,9 +59,8 @@ class Game
   end
 
   def won_by
-    winning_sets = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-    return 0 if winning_sets.any? { |set|  set.to_set.subset?(@players[0].positions.to_set) }
-    return 1 if winning_sets.any? { |set|  set.to_set.subset?(@players[1].positions.to_set) }
+    return 0 if WINNING_SETS.any? { |set|  set.to_set.subset?(@players[0].positions.to_set) }
+    return 1 if WINNING_SETS.any? { |set|  set.to_set.subset?(@players[1].positions.to_set) }
 
     nil
   end
