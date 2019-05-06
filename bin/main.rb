@@ -4,8 +4,9 @@ require_relative '../lib/player.rb'
 
 board = Board.new
 
-players = [Player.new, Player.new]
+player_1 = Player.new
+player_2 = Player.new
 
-game = Game.new(board, players)
+game = Game.new(board, player_1, player_2)
 
 game.play
