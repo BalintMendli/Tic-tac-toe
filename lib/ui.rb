@@ -10,4 +10,8 @@ module UI
   def clear_console
     system('clear')
   end
+
+  def show_welcome_message
+    output('Welcome to Tic-tac-toe!', true)
+  end
 end
