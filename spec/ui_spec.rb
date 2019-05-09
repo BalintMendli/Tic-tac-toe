@@ -2,6 +2,7 @@ require './lib/ui.rb'
 
 describe UI do
   let(:class_instance) { Class.new { extend UI } }
+  
   context '#output' do
     it 'outputs argument' do
       expect { class_instance.output('test') }.to output('test').to_stdout
@@ -19,7 +20,7 @@ describe UI do
 
   context '#input' do
     it 'returns user input' do
-      allow(class_instance).to receive(:gets).and_return('test_input')
+      allow(class_instance).to receive(:gets).and_return("test_input\n")
       expect(class_instance.input).to eq('test_input')
     end
   end
