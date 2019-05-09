@@ -52,8 +52,14 @@ describe Board do
   context '#ask_move' do
     it 'returns the move entered' do
       player = Player.new
-      allow(player).to receive(:gets).and_return('4')
+      allow(player).to receive(:gets).and_return("4\n")
       expect(player.ask_move([1, 5])).to eq(4)
+    end
+
+    it 'asks the move again if entered invalid move' do
+      player = Player.new
+      allow(player).to receive(:gets).and_return("1\n", "4\n")
+      expect { player.ask_move([1, 5]) }.to output(/Invalid move. Try again: /).to_stdout
     end
   end
 
