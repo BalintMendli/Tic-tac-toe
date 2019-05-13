@@ -14,29 +14,41 @@ describe Game do
     end
   end
 
-  context '#play' do
-    it 'ends with player_1 win with vertical positions' do
-      allow(player_1).to receive(:gets).and_return("test_player_1\n", "1\n", "4\n", "7\n")
-      allow(player_2).to receive(:gets).and_return("test_player_2\n", "2\n", "5\n")
-      expect { game.play }.to output(/test_player_1 won the game!/).to_stdout
+  context '#won_by' do
+    it 'returns 0 when player_1 wins with vertical positions' do
+      player_1.add_position(1)
+      player_1.add_position(4)
+      player_1.add_position(7)
+      expect(game.won_by).to eq(0)
     end
 
-    it 'ends with player_2 win horizontal positions' do
-      allow(player_1).to receive(:gets).and_return("test_player_1\n", "4\n", "7\n", "8\n")
-      allow(player_2).to receive(:gets).and_return("test_player_2\n", "1\n", "2\n", "3\n")
-      expect { game.play }.to output(/test_player_2 won the game!/).to_stdout
+    it 'returns 1 when player_2 wins with horizontal positions' do
+      player_2.add_position(1)
+      player_2.add_position(2)
+      player_2.add_position(3)
+      expect(game.won_by).to eq(1)
     end
 
-    it 'ends with player_1 win with diagonal positions' do
-      allow(player_1).to receive(:gets).and_return("test_player_1\n", "1\n", "5\n", "9\n")
-      allow(player_2).to receive(:gets).and_return("test_player_2\n", "4\n", "2\n")
-      expect { game.play }.to output(/test_player_1 won the game!/).to_stdout
+    it 'returns 0 when player_1 wins with diagonal positions' do
+      player_1.add_position(1)
+      player_1.add_position(5)
+      player_1.add_position(9)
+      expect(game.won_by).to eq(0)
     end
+  end
 
-    it 'ends with draw when board is full and nobody won' do
-      allow(player_1).to receive(:gets).and_return("test_player_1\n", "1\n", "5\n", "6\n", "2\n", "7\n")
-      allow(player_2).to receive(:gets).and_return("test_player_2\n", "9\n", "4\n", "3\n", "1\n", "8\n")
-      expect { game.play }.to output(/The game ended with a draw!/).to_stdout
+  context '#full?' do
+    it 'return true if the board is full' do
+      player_1.add_position(1)
+      player_1.add_position(5)
+      player_1.add_position(6)
+      player_1.add_position(2)
+      player_1.add_position(7)
+      player_2.add_position(9)
+      player_2.add_position(4)
+      player_2.add_position(3)
+      player_2.add_position(8)
+      expect(game.full?).to eq(true)
     end
   end
 end

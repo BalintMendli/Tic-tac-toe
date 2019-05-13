@@ -2,7 +2,7 @@ require './lib/ui.rb'
 
 describe UI do
   let(:class_instance) { Class.new { extend UI } }
-  
+
   context '#output' do
     it 'outputs argument' do
       expect { class_instance.output('test') }.to output('test').to_stdout
