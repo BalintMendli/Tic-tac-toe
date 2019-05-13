@@ -26,6 +26,17 @@ class Game
     end
   end
 
+  def won_by
+    return 0 if WINNING_SETS.any? { |set|  set.to_set.subset?(@players[0].positions.to_set) }
+    return 1 if WINNING_SETS.any? { |set|  set.to_set.subset?(@players[1].positions.to_set) }
+
+    nil
+  end
+
+  def full?
+    (@players[0].positions + @players[1].positions).length == 9
+  end
+
   private
 
   def switch_players
@@ -47,13 +58,6 @@ class Game
     @board.update(move, @current_player.sign)
   end
 
-  def won_by
-    return 0 if WINNING_SETS.any? { |set|  set.to_set.subset?(@players[0].positions.to_set) }
-    return 1 if WINNING_SETS.any? { |set|  set.to_set.subset?(@players[1].positions.to_set) }
-
-    nil
-  end
-
   def won_message(won_by)
     output("#{@players[won_by].name} won the game!", true)
     true
@@ -62,9 +66,5 @@ class Game
   def draw_message
     output('The game ended with a draw!', true)
     true
-  end
-
-  def full?
-    (@players[0].positions + @players[1].positions).length == 9
   end
 end
